@@ -1,9 +1,9 @@
 import { useEffect } from "react"
-import MultiSelect from "./components/MultiSelect"
-import { useMultiSelectStore } from "./store/useMultiSelectStore"
+import { useMultiSelectStore } from "./multiSelect/store/useMultiSelectStore"
+import { MultiSelect } from "./multiSelect";
 
 function App() {
-  const { fetchOptions, options } = useMultiSelectStore()
+  const { fetchOptions, filteredOptions, query, toggleSelected, selectedOptions, setQuery } = useMultiSelectStore()
 
   useEffect(() => {
     fetchOptions()
@@ -13,7 +13,7 @@ function App() {
     <>
       <div>
         <h1>bol</h1>
-        <MultiSelect options={options} selectedValues={[]} />
+        <MultiSelect options={filteredOptions} selectedOptions={selectedOptions} onChange={toggleSelected} onSearch={setQuery} query={query} />
       </div>
     </>
   )
