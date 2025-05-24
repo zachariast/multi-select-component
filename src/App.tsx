@@ -10,12 +10,9 @@ function App() {
   }, [fetchOptions]);
 
   return (
-    <>
-      <div>
-        <h1>bol</h1>
-        <MultiSelect options={filteredOptions} selectedOptions={selectedOptions} onChange={toggleSelected} onSearch={setQuery} query={query} />
-      </div>
-    </>
+    <div className="multi-select-container">
+      <MultiSelect options={filteredOptions} selectedOptions={selectedOptions} onChange={toggleSelected} onSearch={setQuery} query={query} />
+    </div>
   )
 }
 

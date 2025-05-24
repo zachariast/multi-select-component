@@ -1,0 +1,22 @@
+@use "../variables";
+
+
+.search-field {
+  position: relative;
+  margin-bottom: variables.$spacing-3;
+  input {
+    width: 100%;
+    padding: variables.$spacing-2;
+    box-sizing: border-box;
+    border: 1px solid variables.$light-gray;
+    border-radius: variables.$radius-1;
+    font-size: variables.$font-size-sm;
+  }
+  &__icon {
+    position: absolute;
+    right: variables.$spacing-2;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+  }
+}

@@ -1,0 +1,50 @@
+@use "../variables";
+
+.multi-select-container {
+  width: 100%;
+  min-width: 200px;
+  max-width: 350px;
+  background: #f8f8f8;
+  padding: variables.$spacing-5;
+  border-radius: variables.$radius-1;
+  border: 2px solid #dededb;
+
+  .multi-select-content {
+    .options-container {
+      height: calc(60vh);
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: variables.$spacing-1; 
+      }
+    
+      &::-webkit-scrollbar-track {
+        background: variables.$dark-gray;
+        border-radius: variables.$radius-1; 
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background: variables.$medium-gray; 
+        border-radius: variables.$radius-1; 
+      }
+    }
+
+    .filter-title {
+      font-size: variables.$font-size-xl;
+      font-weight: normal;
+      margin-top: 0;
+    }
+  }
+
+  .confirm-button {
+    background:variables.$light-blue;
+    color: variables.$white;
+    border: none;
+    margin-top: variables.$spacing-4;
+    padding: variables.$spacing-2 variables.$spacing-3;
+    width: 100%;
+    border-radius: variables.$radius-1;
+    font-size: variables.$font-size-sm;
+    cursor: pointer;
+}
+}

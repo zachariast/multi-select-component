@@ -8,7 +8,7 @@ interface Props {
 
 export const OptionsList: FC<Props> = ({ options, onChange, checked = false }) => {
   return (
-    <ul aria-label="Selectable options" aria-multiselectable="true">
+    <ul aria-label="Selectable options" aria-multiselectable="true" className="options-list">
       {options.map((option, i) => (
         <li key={i} aria-selected={checked}>
           <label>
@@ -18,7 +18,9 @@ export const OptionsList: FC<Props> = ({ options, onChange, checked = false }) =
               onChange={() => onChange(option)}
               aria-label={`${checked ? 'Remove' : 'Select'} ${option}`}
             />
-            {option}
+            <span>
+              {option}
+            </span>
           </label>
         </li>
       ))}
