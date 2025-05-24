@@ -24,40 +24,49 @@ function decodeHtml(html:string): string {
   return txt.value;
 }
 
-export const useMultiSelectStore = create<MultiSelectState>((set, get) => ({
-  options: [],
-  filteredOptions: [],
-  selectedOptions: [],
-  query: '',
-  isLoading: false,
-  setQuery: (value) => {
-    const { options }  = get();
-    const filtered = options.filter((option) =>
-      option.toLowerCase().includes(value.toLowerCase())
-    );
-    set({ query: value, filteredOptions: filtered });
-  },
-  toggleSelected: (listItem) => set((state) => {
-    const selectedOptions = state.selectedOptions.includes(listItem)
-      ? state.selectedOptions.filter((selectedOption) => selectedOption !== listItem)
-      : [...state.selectedOptions, listItem];
-    return { selectedOptions };
-  }),
-  fetchOptions: async (): Promise<void> => {
-    try {
-      set({ isLoading: true });
-      const response = await fetch('/items.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const { data } = await response.json();
-      const decoded = data.map(decodeHtml);
-      const sorted = decoded.sort((a: string, b: string) => a.localeCompare(b))
+export const useMultiSelectStore = create<MultiSelectState>((set, get) => {
+  
+  const storedSelectedOptions = localStorage.getItem('selectedOptions');
+  const parsedSelectedOptions = storedSelectedOptions ? JSON.parse(storedSelectedOptions) : [];
 
-      set({ options: sorted, filteredOptions: sorted, isLoading: false });
-    } catch (err) {
-      set({ isLoading: false })
-      console.error('Failed to fetch selected options:', err);
-    }
-  },
-}));
+  return {
+    options: [],
+    filteredOptions: [],
+    selectedOptions: parsedSelectedOptions,
+    query: '',
+    isLoading: false,
+    setQuery: (value) => {
+      const { options }  = get();
+      const filtered = options.filter((option) =>
+        option.toLowerCase().includes(value.toLowerCase())
+      );
+      set({ query: value, filteredOptions: filtered });
+    },
+    toggleSelected: (listItem) => set((state) => {
+      const selectedOptions = state.selectedOptions.includes(listItem)
+        ? state.selectedOptions.filter((selectedOption) => selectedOption !== listItem)
+        : [...state.selectedOptions, listItem];
+  
+      localStorage.setItem('selectedOptions', JSON.stringify(selectedOptions));
+      
+      return { selectedOptions };
+    }),
+    fetchOptions: async (): Promise<void> => {
+      try {
+        set({ isLoading: true });
+        const response = await fetch('/items.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const { data } = await response.json();
+        const decoded = data.map(decodeHtml);
+        const sorted = decoded.sort((a: string, b: string) => a.localeCompare(b))
+
+        set({ options: sorted, filteredOptions: sorted, isLoading: false });
+      } catch (err) {
+        set({ isLoading: false })
+        console.error('Failed to fetch selected options:', err);
+      }
+    },
+  }
+});
