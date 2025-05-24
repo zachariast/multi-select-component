@@ -25,7 +25,8 @@ function decodeHtml(html:string): string {
 }
 
 export const useMultiSelectStore = create<MultiSelectState>((set, get) => {
-  
+
+  // Retrieve previously selected options from localStorage - if exists
   const storedSelectedOptions = localStorage.getItem('selectedOptions');
   const parsedSelectedOptions = storedSelectedOptions ? JSON.parse(storedSelectedOptions) : [];
 
@@ -35,14 +36,25 @@ export const useMultiSelectStore = create<MultiSelectState>((set, get) => {
     selectedOptions: parsedSelectedOptions,
     query: '',
     isLoading: false,
-    setQuery: (value) => {
+    /**
+     * Updates the search query and filters the options list based on the query.
+     * @param {string} value - The search query text
+     */
+    setQuery: (value:string) => {
       const { options }  = get();
       const filtered = options.filter((option) =>
         option.toLowerCase().includes(value.toLowerCase())
       );
       set({ query: value, filteredOptions: filtered });
     },
-    toggleSelected: (listItem) => set((state) => {
+    /**
+     * Toggles an option's selected state.
+     * If the option is already selected, it will be removed from selection.
+     * Selected options are persisted to localStorage.
+     * 
+     * @param {string} listItem - The option to toggle
+     */
+    toggleSelected: (listItem: string) => set((state) => {
       const selectedOptions = state.selectedOptions.includes(listItem)
         ? state.selectedOptions.filter((selectedOption) => selectedOption !== listItem)
         : [...state.selectedOptions, listItem];
@@ -51,6 +63,12 @@ export const useMultiSelectStore = create<MultiSelectState>((set, get) => {
       
       return { selectedOptions };
     }),
+    /**
+     * Fetches available options from the server.
+     * The fetched data is decoded to handle HTML entities and sorted alphabetically.
+     * 
+     * @returns {Promise<void>}
+     */
     fetchOptions: async (): Promise<void> => {
       try {
         set({ isLoading: true });

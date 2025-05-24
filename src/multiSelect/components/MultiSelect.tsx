@@ -12,9 +12,22 @@ interface Props {
   query: string;
 }
 
+/**
+ * MultiSelect Component
+ * 
+ * A customizable selection component that allows users to search, select,
+ * and deselect multiple options from a provided list.
+ * 
+ * @param {Props} props - Component props
+ * @returns {JSX.Element} Rendered MultiSelect component
+ */
 export const MultiSelect: FC<Props> = ({ options, selectedOptions, onChange, onSearch, query }) => {
   const isLoading = useMultiSelectStore(state => state.isLoading);
 
+  /**
+   * Compute the list of available options by filtering out already selected options.
+   * Set was used here for efficient lookup performance when filtering
+   */
   const availableOptions = useMemo(() => {
     const selectedSet = new Set(selectedOptions);
     return options.filter(option => !selectedSet.has(option));
@@ -37,8 +50,9 @@ export const MultiSelect: FC<Props> = ({ options, selectedOptions, onChange, onS
             <div className="loading">{nl.loading}</div>
           ) : (
             <>
+              {/* Display selected options section if any options are selected */}
               {selectedOptions.length > 0 && (
-                <OptionsList options={selectedOptions} checked onChange={onChange} />
+                < OptionsList options={selectedOptions} checked onChange={onChange} />
               )}
               <OptionsList options={availableOptions} onChange={onChange} />
             </>

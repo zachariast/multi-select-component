@@ -3,7 +3,7 @@
 .multi-select-container {
   width: 100%;
   min-width: 200px;
-  max-width: 350px;
+  max-width: 400px;
   background: #f8f8f8;
   padding: variables.$spacing-5;
   border-radius: variables.$radius-1;
@@ -11,7 +11,7 @@
 
   .multi-select-content {
     .options-container {
-      height: calc(60vh);
+      height: calc(50vh);
       overflow-y: auto;
 
       &::-webkit-scrollbar {
