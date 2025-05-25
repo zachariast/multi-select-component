@@ -1,7 +1,6 @@
 import { useMemo, type FC } from 'react';
 import { SearchField } from './SearchField';
 import OptionsList from './OptionsList';
-import { useMultiSelectStore } from '../store/useMultiSelectStore';
 import { nl } from '../locales';
 
 interface Props {
@@ -10,6 +9,7 @@ interface Props {
   onChange: (value: string) => void;
   onSearch: (query: string) => void;
   query: string;
+  isLoading: boolean;
 }
 
 /**
@@ -21,9 +21,7 @@ interface Props {
  * @param {Props} props - Component props
  * @returns {JSX.Element} Rendered MultiSelect component
  */
-export const MultiSelect: FC<Props> = ({ options, selectedOptions, onChange, onSearch, query }) => {
-  const isLoading = useMultiSelectStore(state => state.isLoading);
-
+export const MultiSelect: FC<Props> = ({ options, selectedOptions, onChange, onSearch, query, isLoading }) => {
   /**
    * Compute the list of available options by filtering out already selected options.
    * Set was used here for efficient lookup performance when filtering

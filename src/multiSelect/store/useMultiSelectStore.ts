@@ -15,6 +15,9 @@ interface MultiSelectState {
  * 
  * @description This function creates a temporary textarea element, sets its innerHTML to the provided HTML string,
  * and then retrieves the decoded value from the textarea's value property.
+ * 
+ * *** This is not the best way to decode HTML entities. It was implemented for demo purposes only ***
+ * 
  * @param html string containing HTML entities
  * @returns string with HTML entities decoded
  */

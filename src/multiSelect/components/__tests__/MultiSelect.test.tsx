@@ -25,6 +25,7 @@ describe('MultiSelect', () => {
         onChange={mockOnChange}
         onSearch={mockOnSearch}
         query={mockQuery}
+        isLoading={false}
       />
     );
 
@@ -43,6 +44,7 @@ describe('MultiSelect', () => {
         onChange={mockOnChange}
         onSearch={mockOnSearch}
         query={mockQuery}
+        isLoading={false}
       />
     );
 
@@ -62,6 +64,7 @@ describe('MultiSelect', () => {
         onChange={mockOnChange}
         onSearch={mockOnSearch}
         query={mockQuery}
+        isLoading={false}
       />
     );
 
